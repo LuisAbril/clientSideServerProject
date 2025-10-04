@@ -22,6 +22,7 @@
 import { onMounted, watchEffect } from 'vue';
 import { useFetch } from '#app';
 import { useUserStore } from '~/stores/user';
+
 const userStore = useUserStore();
 
 const fetchUser = async () => {

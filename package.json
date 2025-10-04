@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^10.1.0",
     "axios": "^1.12.2",
     "nuxt": "^4.1.2",
     "pinia": "^3.0.3",

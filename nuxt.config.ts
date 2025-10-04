@@ -11,5 +11,10 @@ export default defineNuxtConfig({
       BNET_CLIENT_ID: process.env.BNET_CLIENT_ID,
       BNET_REDIRECT_URI: process.env.BNET_REDIRECT_URI,
     }
-  }
+  },
+  modules: [
+    '@nuxtjs/i18n',
+    // ...other modules
+  ],
+  // i18n: { ... } // i18n config removed
 })

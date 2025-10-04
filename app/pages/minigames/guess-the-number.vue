@@ -3,7 +3,7 @@
     <h2>Guess the Number</h2>
     <div class="difficulty-select">
       <label>Difficulty:</label>
-      <select v-model="difficulty" @change="setDifficulty(difficulty)">
+      <select v-model="difficulty" :class="selectColorClass" @change="setDifficulty(difficulty)">
         <option value="easy">Easy (1-50)</option>
         <option value="normal">Normal (1-100)</option>
         <option value="hard">Hard (1-200)</option>
@@ -43,11 +43,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useMouse } from '@vueuse/core';
 import { useGuessNumberStore } from '~/stores/guessNumber';
-
 const store = useGuessNumberStore();
+
 const difficulties = [
   { label: 'Easy (1-50)', value: 'easy', min: 1, max: 50 },
   { label: 'Normal (1-100)', value: 'normal', min: 1, max: 100 },
@@ -56,6 +56,7 @@ const difficulties = [
 const difficulty = ref(store.stats.difficulty || 'normal');
 function getRange() {
   const d = difficulties.find(d => d.value === difficulty.value) || difficulties[1];
+  if (!d) return { min: 1, max: 100 };
   return { min: d.min, max: d.max };
 }
 const number = ref(Math.floor(Math.random() * (getRange().max - getRange().min + 1)) + getRange().min);
@@ -115,6 +116,14 @@ function resetGame() {
 watch(difficulty, (newVal) => {
   setDifficulty(newVal);
 });
+
+// Dynamic class for select color
+const selectColorClass = computed(() => {
+  if (difficulty.value === 'easy') return 'select-easy';
+  if (difficulty.value === 'normal') return 'select-normal';
+  if (difficulty.value === 'hard') return 'select-hard';
+  return '';
+});
 </script>
 
 <style scoped>
@@ -161,5 +170,35 @@ button:hover {
   color: #00ffe7;
   font-size: 1rem;
   text-align: left;
+}
+.difficulty-select select {
+  background: #232526;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  border-width: 2px;
+  border-style: solid;
+}
+.difficulty-select select:focus {
+  box-shadow: 0 0 6px #00ffe788;
+}
+.difficulty-select option {
+  background: #232526;
+  color: #00ffe7;
+}
+.select-easy {
+  color: #00ff7f !important;
+  border-color: #00ff7f !important;
+}
+.select-normal {
+  color: #ffe700 !important;
+  border-color: #ffe700 !important;
+}
+.select-hard {
+  color: #ff3c3c !important;
+  border-color: #ff3c3c !important;
 }
 </style>
