@@ -4,7 +4,6 @@
     <div v-else-if="userStore.loggedIn">
       <div class="container user-container">
         <h2>Welcome, {{ userStore.user?.user?.battletag || userStore.user?.user?.sub }}</h2>
-        <pre class="userinfo">{{ userStore.user?.user }}</pre>
       </div>
       <div v-if="gamesPending" class="container loading-container">Loading your games...</div>
       <div v-else>
@@ -56,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { useFetch } from '#app';
 import { useUserStore } from '~/stores/user';
@@ -86,22 +85,22 @@ const logout = async () => {
 };
 
 onMounted(async () => {
-    await fetchUser();
-    pending.value = false;
-    if (userStore.loggedIn) {
-        await fetchGames();
-    }
+  // Siempre recargar usuario al montar la página principal
+  await fetchUser();
+  pending.value = false;
+  if (userStore.loggedIn) {
+    await fetchGames();
+  }
+});
 
-    // Si venimos de un login (callback), forzar recarga de usuario
-    if (window.location.search.includes('code=') && window.location.pathname === '/') {
-        // Esperar a que cookies estén listas y recargar usuario
-        setTimeout(async () => {
-            await fetchUser();
-            if (userStore.loggedIn) {
-                await fetchGames();
-            }
-        }, 300);
-    }
+// Watch for login state changes to refresh user/games info automatically
+watchEffect(async () => {
+  if (userStore.loggedIn && !games.value) {
+    await fetchGames();
+  }
+  if (!userStore.loggedIn && games.value) {
+    games.value = null;
+  }
 });
 </script>
 
@@ -176,17 +175,6 @@ onMounted(async () => {
     background: #232526;
     color: #fff;
     text-align: center;
-}
-.userinfo {
-    background: #181a1b;
-    color: #00ffe7;
-    padding: 1rem;
-    border-radius: 10px;
-    margin: 1rem 0;
-    font-size: 1.1rem;
-    max-width: 500px;
-    word-break: break-all;
-    text-align: left;
 }
 .char-name {
     color: #00ffe7;

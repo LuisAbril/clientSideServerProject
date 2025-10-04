@@ -34,16 +34,9 @@ const logout = async () => {
   userStore.clearUser();
   window.location.href = '/logging-out';
 };
-const checkLoginCallback = () => {
-  if (typeof window !== 'undefined' && window.location.search.includes('code=') && window.location.pathname === '/') {
-    setTimeout(() => {
-      fetchUser();
-    }, 300);
-  }
-};
 onMounted(() => {
+  // Siempre recargar usuario al montar el header
   fetchUser();
-  checkLoginCallback();
 });
 </script>
 
