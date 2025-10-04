@@ -8,36 +8,6 @@
       <div class="main-flex-containers">
         <div class="container stats-container styled-container">
           <h3>Statistics</h3>
-          <div class="stats-section">
-            <h4>BattleNet Statistics</h4>
-            <div v-if="gamesPending">Loading your games...</div>
-            <template v-else>
-              <div v-if="games && (games.games?.length || games.wow || games.diablo)">
-                <h5>Your Blizzard Games:</h5>
-                <ul v-if="games.games && games.games.length">
-                  <li v-for="game in games.games" :key="game">{{ game }}</li>
-                </ul>
-                <div v-if="games.wow">
-                  <h6>World of Warcraft Characters:</h6>
-                  <ul>
-                    <li v-for="(account, idx) in games.wow" :key="idx">
-                      <ul>
-                        <li v-for="char in account.characters" :key="char.name">
-                          <span class="char-name">{{ char.name }}</span>
-                          <span class="char-detail">({{ char.level }} {{ char.playable_class?.name?.en_US }})</span>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-                <div v-if="games.diablo">
-                  <h6>Diablo Progress:</h6>
-                  <pre>{{ games.diablo }}</pre>
-                </div>
-              </div>
-              <div v-else class="empty-container">No Blizzard games found for this account.</div>
-            </template>
-          </div>
           <div class="stats-section" style="margin-top:2rem;">
             <h4>Local Statistics</h4>
             <div class="game-section">
@@ -89,9 +59,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { useFetch } from '#app';
+import { ref, onMounted, watch } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { useGuessNumberStore } from '~/stores/guessNumber';
 import { useTicTacToeStore } from '~/stores/ticTacToe';
@@ -100,59 +68,35 @@ const userStore = useUserStore();
 const guessStore = useGuessNumberStore();
 const tttStore = useTicTacToeStore();
 const pending = ref(true);
-const games = ref(null);
-const gamesPending = ref(false);
 
 const fetchUser = async () => {
-    const { data } = await useFetch('/api/auth/user', { key: 'user', watch: false, server: false, immediate: true, cache: 'no-cache', credentials: 'include' });
-    userStore.setUser(data.value);
-};
-
-const fetchGames = async () => {
-    gamesPending.value = true;
-    const { data } = await useFetch('/api/auth/games');
-    games.value = data.value;
-    gamesPending.value = false;
+  const res = await fetch('/api/auth/user', { credentials: 'include' });
+  const data = await res.json();
+  userStore.setUser(data);
 };
 
 const logout = async () => {
-  showLoader.value = true;
   await fetch('/api/auth/logout', { credentials: 'include' });
   userStore.clearUser();
-  games.value = null;
   window.location.href = '/';
 };
 
 onMounted(async () => {
-  // Siempre recargar usuario al montar la página principal
   await fetchUser();
   pending.value = false;
   if (userStore.loggedIn) {
-    await fetchGames();
-  }
-  tttStore.loadStats();
-});
-
-// Watch for login state changes to refresh user/games info automatically
-watchEffect(async () => {
-  if (userStore.loggedIn && !games.value) {
-    await fetchGames();
-  }
-  if (!userStore.loggedIn && games.value) {
-    games.value = null;
+    tttStore.loadStats();
   }
 });
 
-// Watch for login state changes to refresh user info (in case cookie changes externally)
 watch(
   () => userStore.loggedIn,
   async (loggedIn) => {
     if (loggedIn) {
       await fetchUser();
-      await fetchGames();
+      tttStore.loadStats();
     } else {
       await fetchUser();
-      games.value = null;
     }
   }
 );
@@ -248,6 +192,7 @@ watch(
   background: linear-gradient(90deg, #232526, #1a2980);
   color: #00ffe7;
   text-align: center;
+  
 }
 .games-container {
   border-left: 6px solid #00ffe7;
