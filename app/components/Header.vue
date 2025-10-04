@@ -1,23 +1,25 @@
 <template>
   <header class="gamer-header">
     <div class="logo">BattleNet Info</div>
-    <nav>
-  <NuxtLink to="/" class="nav-btn">Home</NuxtLink>
-  <NuxtLink to="/about" class="nav-btn">About Us</NuxtLink>
-  <NuxtLink to="/contacts" class="nav-btn">Contact</NuxtLink>
-  <button v-if="!userStore.loggedIn" class="gamer-btn" @click="loginWithBattleNet">
-        <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" />
-        Login with Battle.net
-      </button>
-      <button v-else class="gamer-btn" @click="logout">
-        Logout
-      </button>
+    <nav class="nav-flex">
+      <NuxtLink to="/" class="nav-btn">Home</NuxtLink>
+      <NuxtLink to="/about" class="nav-btn">About Us</NuxtLink>
+      <NuxtLink to="/contacts" class="nav-btn">Contact</NuxtLink>
+      <div class="nav-btn-group">
+        <button v-if="!userStore.loggedIn" class="gamer-btn login-btn-small" @click="loginWithBattleNet">
+          <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" />
+          Login with Battle.net
+        </button>
+        <button v-else class="gamer-btn" @click="logout">
+          Logout
+        </button>
+      </div>
     </nav>
   </header>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, watchEffect } from 'vue';
 import { useFetch } from '#app';
 import { useUserStore } from '~/stores/user';
 const userStore = useUserStore();
@@ -35,12 +37,38 @@ const logout = async () => {
   window.location.href = '/logging-out';
 };
 onMounted(() => {
-  // Siempre recargar usuario al montar el header
   fetchUser();
+});
+
+// Watch for login state changes to refresh user info automatically
+watchEffect(() => {
+  if (!userStore.loggedIn) {
+    fetchUser();
+  }
 });
 </script>
 
 <style scoped>
+  .nav-flex {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .nav-btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 1.2rem;
+  }
+  .login-btn-small {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 10px;
+    min-width: unset;
+    height: 2.1rem;
+    gap: 0.4rem;
+  }
   .gamer-btn {
     background: linear-gradient(120deg, #1a2980 0%, #00ffe7 100%);
     color: #fff;

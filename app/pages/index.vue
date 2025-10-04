@@ -5,57 +5,64 @@
       <div class="container user-container">
         <h2>Welcome, {{ userStore.user?.user?.battletag || userStore.user?.user?.sub }}</h2>
       </div>
-      <div v-if="gamesPending" class="container loading-container">Loading your games...</div>
-      <div v-else>
-        <div v-if="games && games.games && games.games.length">
-          <div class="container games-container">
-            <h3>Your Blizzard Games:</h3>
-            <ul>
-              <li v-for="game in games.games" :key="game">{{ game }}</li>
-            </ul>
-          </div>
-        </div>
-        <div v-if="games && games.wow">
-          <div class="container wow-container">
-            <h4>World of Warcraft Characters:</h4>
-            <ul>
-              <li v-for="(account, idx) in games.wow" :key="idx">
+      <div class="main-flex-containers">
+        <div class="container stats-container styled-container">
+          <h3>Statistics</h3>
+          <div v-if="gamesPending">Loading your games...</div>
+          <template v-else>
+            <div v-if="games && (games.games?.length || games.wow || games.diablo)">
+              <h4>Your Blizzard Games:</h4>
+              <ul v-if="games.games && games.games.length">
+                <li v-for="game in games.games" :key="game">{{ game }}</li>
+              </ul>
+              <div v-if="games.wow">
+                <h5>World of Warcraft Characters:</h5>
                 <ul>
-                  <li v-for="char in account.characters" :key="char.name">
-                    <span class="char-name">{{ char.name }}</span>
-                    <span class="char-detail">({{ char.level }} {{ char.playable_class?.name?.en_US }})</span>
+                  <li v-for="(account, idx) in games.wow" :key="idx">
+                    <ul>
+                      <li v-for="char in account.characters" :key="char.name">
+                        <span class="char-name">{{ char.name }}</span>
+                        <span class="char-detail">({{ char.level }} {{ char.playable_class?.name?.en_US }})</span>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
-              </li>
-            </ul>
+              </div>
+              <div v-if="games.diablo">
+                <h5>Diablo Progress:</h5>
+                <pre>{{ games.diablo }}</pre>
+              </div>
+            </div>
+            <div v-else class="empty-container">No Blizzard games found for this account.</div>
+          </template>
+        </div>
+        <div class="container minigames-container styled-container">
+          <h3>Minigames</h3>
+          <div class="minigames-buttons">
+            <NuxtLink to="/minigames/guess-the-number" class="gamer-btn">Guess the Number</NuxtLink>
+            <NuxtLink to="/minigames/tic-tac-toe" class="gamer-btn">Tic Tac Toe</NuxtLink>
           </div>
         </div>
-        <div v-if="games && games.diablo">
-          <div class="container diablo-container">
-            <h4>Diablo Progress:</h4>
-            <pre>{{ games.diablo }}</pre>
-          </div>
-        </div>
-        <div v-if="games && !games.games?.length && !games.wow && !games.diablo" class="container empty-container">
-          No Blizzard games found for this account.
-        </div>
-      </div>
-      <div class="minigames-buttons">
-        <NuxtLink to="/minigames/guess-the-number" class="gamer-btn">Guess the Number</NuxtLink>
-        <NuxtLink to="/minigames/tic-tac-toe" class="gamer-btn">Tic Tac Toe</NuxtLink>
       </div>
     </div>
+    <!-- Si no está logueado, no mostrar nada -->
     <div v-else>
-      <div class="minigames-buttons">
-        <NuxtLink to="/minigames/guess-the-number" class="gamer-btn">Guess the Number</NuxtLink>
-        <NuxtLink to="/minigames/tic-tac-toe" class="gamer-btn">Tic Tac Toe</NuxtLink>
+      <div class="container user-container styled-container welcome-container">
+        <h2>Welcome to BattleNet Info!</h2>
+        <p class="welcome-text">Log in with your Battle.net account to view your game stats and play awesome minigames.<br>
+        <span class="welcome-highlight">Level up your experience!</span></p>
+        <div class="welcome-icons">
+          <span class="icon">🎮</span>
+          <span class="icon">✨</span>
+          <span class="icon">🔥</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted, watchEffect, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useFetch } from '#app';
 import { useUserStore } from '~/stores/user';
@@ -102,9 +109,52 @@ watchEffect(async () => {
     games.value = null;
   }
 });
+
+// Watch for login state changes to refresh user info (in case cookie changes externally)
+watch(
+  () => userStore.loggedIn,
+  async (loggedIn) => {
+    if (loggedIn) {
+      await fetchUser();
+      await fetchGames();
+    } else {
+      await fetchUser();
+      games.value = null;
+    }
+  }
+);
 </script>
 
 <style scoped>
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  margin-top: 3rem;
+}
+.welcome-text {
+  color: #e0f7fa;
+  font-size: 1.25rem;
+  margin: 1.2rem 0 0.5rem 0;
+  text-align: center;
+}
+.welcome-highlight {
+  color: #a259ff;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.welcome-icons {
+  margin-top: 1.2rem;
+  font-size: 2.2rem;
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+.icon {
+  filter: drop-shadow(0 0 8px #a259ff88);
+}
 .gamer-btn {
     background: linear-gradient(120deg, #1a2980 0%, #00ffe7 100%);
     color: #fff;
@@ -143,50 +193,59 @@ watchEffect(async () => {
     height: 48px;
 }
 .container {
-    background: #232526;
-    border-radius: 18px;
-    box-shadow: 0 2px 16px #000a;
-    padding: 2rem 2.5rem;
-    margin: 2rem auto;
-    max-width: 600px;
-    color: #e0f7fa;
-    font-family: 'Montserrat', sans-serif;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #000a;
+  padding: 2rem 2.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  color: #e0f7fa;
+  font-family: 'Montserrat', sans-serif;
+}
+.styled-container {
+  background: linear-gradient(120deg, #181a1b 0%, #232526 100%);
+  border: 2.5px solid #00ffe7;
+  box-shadow: none;
+  transition: box-shadow 0.22s, border-color 0.22s;
+}
+.styled-container:hover {
+  border-color: #a259ff;
+  box-shadow: 0 0 24px 0 #a259ffcc, 0 2px 12px #000a;
 }
 .user-container {
-    background: linear-gradient(90deg, #232526, #1a2980);
-    color: #00ffe7;
-    text-align: center;
+  background: linear-gradient(90deg, #232526, #1a2980);
+  color: #00ffe7;
+  text-align: center;
 }
 .games-container {
-    border-left: 6px solid #00ffe7;
+  border-left: 6px solid #00ffe7;
 }
 .wow-container {
-    border-left: 6px solid #ffb300;
+  border-left: 6px solid #ffb300;
 }
 .diablo-container {
-    border-left: 6px solid #c60b1e;
+  border-left: 6px solid #c60b1e;
 }
 .empty-container {
-    background: #232526;
-    color: #ffb300;
-    text-align: center;
+  background: #232526;
+  color: #ffb300;
+  text-align: center;
 }
 .loading-container {
-    background: #232526;
-    color: #fff;
-    text-align: center;
+  background: #232526;
+  color: #fff;
+  text-align: center;
 }
 .char-name {
-    color: #00ffe7;
-    font-weight: bold;
+  color: #00ffe7;
+  font-weight: bold;
 }
 .char-detail {
-    color: #fff;
-    margin-left: 0.5rem;
+  color: #fff;
+  margin-left: 0.5rem;
 }
 .highlight {
-    color: #ffb300;
-    font-weight: bold;
+  color: #ffb300;
+  font-weight: bold;
 }
 .minigames-buttons {
     display: flex;
@@ -194,6 +253,20 @@ watchEffect(async () => {
     align-items: center;
     margin-top: 2.5rem;
     gap: 1.5rem;
+}
+.main-flex-containers {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+}
+.stats-container, .minigames-container {
+  min-width: 320px;
+  max-width: 400px;
+  flex: 1 1 0;
+  margin: 0 0.5rem;
 }
 </style>
 
