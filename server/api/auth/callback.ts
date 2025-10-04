@@ -59,6 +59,6 @@ export default defineEventHandler(async (event) => {
     maxAge: 60 * 60 * 24,
   });
 
-  // Redirect to intermediate page
-  return event.node.res.writeHead(302, { Location: '/redirecting' }).end();
+  // Redirect directly to homepage
+  return event.node.res.writeHead(302, { Location: '/' }).end();
 });

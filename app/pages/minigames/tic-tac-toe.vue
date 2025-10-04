@@ -22,17 +22,23 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useTicTacToeStore } from '~/stores/ticTacToe';
+const tttStore = useTicTacToeStore();
 const board = ref<string[]>(Array(9).fill(''));
 const currentPlayer = ref('X');
 const winner = ref('');
+
+tttStore.loadStats();
 
 function makeMove(idx: number) {
   if (board.value[idx] || winner.value) return;
   board.value[idx] = currentPlayer.value;
   if (checkWinner()) {
     winner.value = currentPlayer.value;
+    tttStore.recordGame(currentPlayer.value);
   } else if (board.value.every(cell => cell)) {
     winner.value = '';
+    tttStore.recordGame('draw');
   } else {
     currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
   }

@@ -8,33 +8,60 @@
       <div class="main-flex-containers">
         <div class="container stats-container styled-container">
           <h3>Statistics</h3>
-          <div v-if="gamesPending">Loading your games...</div>
-          <template v-else>
-            <div v-if="games && (games.games?.length || games.wow || games.diablo)">
-              <h4>Your Blizzard Games:</h4>
-              <ul v-if="games.games && games.games.length">
-                <li v-for="game in games.games" :key="game">{{ game }}</li>
-              </ul>
-              <div v-if="games.wow">
-                <h5>World of Warcraft Characters:</h5>
-                <ul>
-                  <li v-for="(account, idx) in games.wow" :key="idx">
-                    <ul>
-                      <li v-for="char in account.characters" :key="char.name">
-                        <span class="char-name">{{ char.name }}</span>
-                        <span class="char-detail">({{ char.level }} {{ char.playable_class?.name?.en_US }})</span>
-                      </li>
-                    </ul>
-                  </li>
+          <div class="stats-section">
+            <h4>BattleNet Statistics</h4>
+            <div v-if="gamesPending">Loading your games...</div>
+            <template v-else>
+              <div v-if="games && (games.games?.length || games.wow || games.diablo)">
+                <h5>Your Blizzard Games:</h5>
+                <ul v-if="games.games && games.games.length">
+                  <li v-for="game in games.games" :key="game">{{ game }}</li>
                 </ul>
+                <div v-if="games.wow">
+                  <h6>World of Warcraft Characters:</h6>
+                  <ul>
+                    <li v-for="(account, idx) in games.wow" :key="idx">
+                      <ul>
+                        <li v-for="char in account.characters" :key="char.name">
+                          <span class="char-name">{{ char.name }}</span>
+                          <span class="char-detail">({{ char.level }} {{ char.playable_class?.name?.en_US }})</span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div v-if="games.diablo">
+                  <h6>Diablo Progress:</h6>
+                  <pre>{{ games.diablo }}</pre>
+                </div>
               </div>
-              <div v-if="games.diablo">
-                <h5>Diablo Progress:</h5>
-                <pre>{{ games.diablo }}</pre>
-              </div>
+              <div v-else class="empty-container">No Blizzard games found for this account.</div>
+            </template>
+          </div>
+          <div class="stats-section" style="margin-top:2rem;">
+            <h4>Local Statistics</h4>
+            <div class="game-section">
+              <h5>Guess the Number</h5>
+              <ul>
+                <li><b>Games Played:</b> {{ guessStore.stats.gamesPlayed }}</li>
+                <li><b>Total Attempts:</b> {{ guessStore.stats.totalAttempts }}</li>
+                <li><b>Best Game (fewest attempts):</b> {{ guessStore.stats.bestGame !== null ? guessStore.stats.bestGame : '-' }}</li>
+                <li><b>Last Game Attempts:</b> {{ guessStore.stats.lastAttempts }}</li>
+                <li><b>Difficulty:</b> {{ guessStore.stats.difficulty }}</li>
+              </ul>
             </div>
-            <div v-else class="empty-container">No Blizzard games found for this account.</div>
-          </template>
+            <div class="game-section">
+              <h5>Tic Tac Toe</h5>
+              <ul>
+                <li><b>Games Played:</b> {{ tttStore.gamesPlayed }}</li>
+                <li><b>X Wins:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.xWins : 'N/A' }}</li>
+                <li><b>O Wins:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.oWins : 'N/A' }}</li>
+                <li><b>Draws:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.draws : 'N/A' }}</li>
+                <li><b>Probability X Wins:</b> {{ tttStore.gamesPlayed > 0 ? ((tttStore.xWins / tttStore.gamesPlayed) * 100).toFixed(1) + '%' : 'N/A' }}</li>
+                <li><b>Probability O Wins:</b> {{ tttStore.gamesPlayed > 0 ? ((tttStore.oWins / tttStore.gamesPlayed) * 100).toFixed(1) + '%' : 'N/A' }}</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="container minigames-container styled-container">
           <h3>Minigames</h3>
@@ -66,8 +93,12 @@ import { ref, onMounted, watchEffect, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useFetch } from '#app';
 import { useUserStore } from '~/stores/user';
+import { useGuessNumberStore } from '~/stores/guessNumber';
+import { useTicTacToeStore } from '~/stores/ticTacToe';
 
 const userStore = useUserStore();
+const guessStore = useGuessNumberStore();
+const tttStore = useTicTacToeStore();
 const pending = ref(true);
 const games = ref(null);
 const gamesPending = ref(false);
@@ -85,10 +116,11 @@ const fetchGames = async () => {
 };
 
 const logout = async () => {
-    await fetch('/api/auth/logout', { credentials: 'include' });
-    userStore.clearUser();
-    games.value = null;
-    window.location.href = '/';
+  showLoader.value = true;
+  await fetch('/api/auth/logout', { credentials: 'include' });
+  userStore.clearUser();
+  games.value = null;
+  window.location.href = '/';
 };
 
 onMounted(async () => {
@@ -98,6 +130,7 @@ onMounted(async () => {
   if (userStore.loggedIn) {
     await fetchGames();
   }
+  tttStore.loadStats();
 });
 
 // Watch for login state changes to refresh user/games info automatically

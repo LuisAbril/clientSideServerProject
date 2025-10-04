@@ -29,12 +29,24 @@ const fetchUser = async () => {
   userStore.setUser(data.value);
 };
 const loginWithBattleNet = () => {
-  window.location.href = '/api/auth/login';
+  if (typeof window !== 'undefined') {
+    const loader = document.createElement('div');
+    loader.className = 'global-loader';
+    loader.innerHTML = `<div class='spinner'></div><span class='loader-text'>Loading...</span>`;
+    document.body.appendChild(loader);
+    window.location.href = '/api/auth/login';
+  }
 };
 const logout = async () => {
+  if (typeof window !== 'undefined') {
+    const loader = document.createElement('div');
+    loader.className = 'global-loader';
+    loader.innerHTML = `<div class='spinner'></div><span class='loader-text'>Loading...</span>`;
+    document.body.appendChild(loader);
+  }
   await fetch('/api/auth/logout', { credentials: 'include' });
   userStore.clearUser();
-  window.location.href = '/logging-out';
+  window.location.href = '/';
 };
 onMounted(() => {
   fetchUser();
