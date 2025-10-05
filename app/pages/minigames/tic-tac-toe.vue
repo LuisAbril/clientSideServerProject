@@ -1,21 +1,21 @@
 <template>
   <div class="minigame-container">
-    <h2>Tic Tac Toe</h2>
+    <h2>{{ $t('ticTacToe.title') }}</h2>
     <div class="board">
       <div v-for="(cell, idx) in board" :key="idx" class="cell" @click="makeMove(idx)">
         {{ cell }}
       </div>
     </div>
     <div v-if="winner">
-      <p>{{ winner }} wins!</p>
-      <button @click="resetGame">Play Again</button>
+      <p>{{ winner }} {{ $t('ticTacToe.win') }}</p>
+      <button @click="resetGame">{{ $t('ticTacToe.playAgain') }}</button>
     </div>
     <div v-else-if="isDraw">
-      <p>It's a draw!</p>
-      <button @click="resetGame">Play Again</button>
+      <p>{{ $t('ticTacToe.draw') }}</p>
+      <button @click="resetGame">{{ $t('ticTacToe.playAgain') }}</button>
     </div>
     <div v-else>
-      <p>Current Player: {{ currentPlayer }}</p>
+      <p>{{ $t('ticTacToe.currentPlayer') }}: {{ currentPlayer }}</p>
     </div>
   </div>
 </template>

@@ -1,9 +1,9 @@
 
 <template>
   <div class="contacts-container">
-    <h1>Contact Us</h1>
+    <h1>{{ $t('contactTitle') }}</h1>
     <p>Email: support@battlenetinfo.gg</p>
-    <p>Phone: +1 555-123-4567</p>
+    <p>{{ $t('contactPhone') }}</p>
   </div>
 </template>
 

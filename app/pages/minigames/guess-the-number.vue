@@ -1,40 +1,40 @@
 <template>
   <div class="minigame-container">
-    <h2>Guess the Number</h2>
+    <h2>{{ $t('guessNumber.title') }}</h2>
     <div class="difficulty-select">
-      <label>Difficulty:</label>
+      <label>{{ $t('guessNumber.difficulty') }}</label>
       <select v-model="difficulty" :class="selectColorClass" @change="setDifficulty(difficulty)">
-        <option value="easy">Easy (1-50)</option>
-        <option value="normal">Normal (1-100)</option>
-        <option value="hard">Hard (1-200)</option>
+        <option value="easy">{{ $t('guessNumber.easy') }}</option>
+        <option value="normal">{{ $t('guessNumber.normal') }}</option>
+        <option value="hard">{{ $t('guessNumber.hard') }}</option>
       </select>
     </div>
     <div v-if="!won">
-      <p>Guess a number between {{ getRange().min }} and {{ getRange().max }}:</p>
+      <p>{{ $t('guessNumber.guessPrompt', { min: getRange().min, max: getRange().max }) }}</p>
       <input v-model.number="guess" type="number" :min="getRange().min" :max="getRange().max" @keyup.enter="checkGuess" />
-      <button @click="checkGuess">Guess</button>
+      <button @click="checkGuess">{{ $t('guessNumber.guessBtn') }}</button>
       <p v-if="feedback">{{ feedback }}</p>
       <div v-if="history.length">
-        <h4>Attempts History</h4>
+        <h4>{{ $t('guessNumber.history') }}</h4>
         <ul>
           <li v-for="(item, idx) in history" :key="idx">
-            Attempt {{ idx + 1 }}: {{ item.guess }} - {{ item.result }}
+            {{ $t('attempt') }} {{ idx + 1 }}: {{ item.guess }} - {{ item.result }}
           </li>
         </ul>
       </div>
-      <p>Total attempts: {{ attempts }}</p>
+      <p>{{ $t('guessNumber.attempts', { attempts }) }}</p>
     </div>
     <div v-else>
-      <p>🎉 Congratulations! You guessed the number <b>{{ number }}</b> in {{ attempts }} attempts!</p>
+      <p>🎉 {{ $t('guessNumber.congrats', { number, attempts }) }}</p>
       <div>
-        <h4>Attempts History</h4>
+        <h4>{{ $t('guessNumber.history') }}</h4>
         <ul>
           <li v-for="(item, idx) in history" :key="idx">
-            Attempt {{ idx + 1 }}: {{ item.guess }} - {{ item.result }}
+            {{ $t('attempt') }} {{ idx + 1 }}: {{ item.guess }} - {{ item.result }}
           </li>
         </ul>
       </div>
-      <button @click="resetGame">Play Again</button>
+      <button @click="resetGame">{{ $t('guessNumber.playAgain') }}</button>
     </div>
     <div class="mouse-info">
       <small>Mouse position: X: {{ x }}, Y: {{ y }}</small>

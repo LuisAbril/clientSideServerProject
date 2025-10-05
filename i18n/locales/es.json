@@ -68,4 +68,18 @@
 
   "spanish": "Español"
 
+,
+  "aboutTitle": "Sobre BattleNet Info",
+  "aboutText": "BattleNet Info es una aplicación web moderna que te permite iniciar sesión con tu cuenta de Battle.net y ver tu información básica de perfil. Diseñada para gamers, cuenta con una interfaz elegante e intuitiva. ¡Disfruta explorando tus datos de Battle.net de forma divertida y segura!",
+  "contactTitle": "Contáctanos",
+  "contactPhone": "Teléfono: +1 555-123-4567",
+  "gameStats": "Estadísticas de juego",
+  "gamesPlayed": "Partidas jugadas",
+  "bestGame": "Mejor partida (menos intentos)",
+  "lastAttempts": "Intentos de la última partida",
+  "wins": "Victorias",
+  "draws": "Empates",
+  "probXWins": "Probabilidad de victoria X",
+  "probOWins": "Probabilidad de victoria O",
+  "attempt": "Intento"
 }

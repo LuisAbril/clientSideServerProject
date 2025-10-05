@@ -3,41 +3,41 @@
     <div v-if="pending">Loading...</div>
     <div v-else-if="userStore.loggedIn">
       <div class="container user-container">
-        <h2>Welcome, {{ userStore.user?.user?.battletag || userStore.user?.user?.sub }}</h2>
+        <h2>{{ $t('welcomeUser') }} {{ userStore.user?.user?.battletag || userStore.user?.user?.sub }}</h2>
       </div>
       <div class="main-flex-containers">
         <div class="container stats-container styled-container">
-          <h3>Statistics</h3>
+          <h3>{{ $t('statistics') }}</h3>
           <div class="stats-section" style="margin-top:2rem;">
-            <h4>Local Statistics</h4>
+            <h4>{{ $t('localStats') }}</h4>
             <div class="game-section">
-              <h5>Guess the Number</h5>
+              <h5>{{ $t('guessNumber.title') }}</h5>
               <ul>
-                <li><b>Games Played:</b> {{ guessStore.stats.gamesPlayed }}</li>
-                <li><b>Total Attempts:</b> {{ guessStore.stats.totalAttempts }}</li>
-                <li><b>Best Game (fewest attempts):</b> {{ guessStore.stats.bestGame !== null ? guessStore.stats.bestGame : '-' }}</li>
-                <li><b>Last Game Attempts:</b> {{ guessStore.stats.lastAttempts }}</li>
-                <li><b>Difficulty:</b> {{ guessStore.stats.difficulty }}</li>
+                <li><b>{{ $t('gamesPlayed') }}:</b> {{ guessStore.stats.gamesPlayed }}</li>
+                <li><b>{{ $t('guessNumber.attempts') }}:</b> {{ guessStore.stats.totalAttempts }}</li>
+                <li><b>{{ $t('bestGame') }}:</b> {{ guessStore.stats.bestGame !== null ? guessStore.stats.bestGame : '-' }}</li>
+                <li><b>{{ $t('lastAttempts') }}:</b> {{ guessStore.stats.lastAttempts }}</li>
+                <li><b>{{ $t('guessNumber.difficulty') }}:</b> {{ guessStore.stats.difficulty }}</li>
               </ul>
             </div>
             <div class="game-section">
-              <h5>Tic Tac Toe</h5>
+              <h5>{{ $t('ticTacToe.title') }}</h5>
               <ul>
-                <li><b>Games Played:</b> {{ tttStore.gamesPlayed }}</li>
-                <li><b>X Wins:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.xWins : 'N/A' }}</li>
-                <li><b>O Wins:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.oWins : 'N/A' }}</li>
-                <li><b>Draws:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.draws : 'N/A' }}</li>
-                <li><b>Probability X Wins:</b> {{ tttStore.gamesPlayed > 0 ? ((tttStore.xWins / tttStore.gamesPlayed) * 100).toFixed(1) + '%' : 'N/A' }}</li>
-                <li><b>Probability O Wins:</b> {{ tttStore.gamesPlayed > 0 ? ((tttStore.oWins / tttStore.gamesPlayed) * 100).toFixed(1) + '%' : 'N/A' }}</li>
+                <li><b>{{ $t('gamesPlayed') }}:</b> {{ tttStore.gamesPlayed }}</li>
+                <li><b>X {{ $t('wins') }}:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.xWins : 'N/A' }}</li>
+                <li><b>O {{ $t('wins') }}:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.oWins : 'N/A' }}</li>
+                <li><b>{{ $t('draws') }}:</b> {{ tttStore.gamesPlayed > 0 ? tttStore.draws : 'N/A' }}</li>
+                <li><b>{{ $t('probXWins') }}:</b> {{ tttStore.gamesPlayed > 0 ? ((tttStore.xWins / tttStore.gamesPlayed) * 100).toFixed(1) + '%' : 'N/A' }}</li>
+                <li><b>{{ $t('probOWins') }}:</b> {{ tttStore.gamesPlayed > 0 ? ((tttStore.oWins / tttStore.gamesPlayed) * 100).toFixed(1) + '%' : 'N/A' }}</li>
               </ul>
             </div>
           </div>
         </div>
         <div class="container minigames-container styled-container">
-          <h3>Minigames</h3>
+          <h3>{{ $t('minigames') }}</h3>
           <div class="minigames-buttons">
-            <NuxtLink to="/minigames/guess-the-number" class="gamer-btn">Guess the Number</NuxtLink>
-            <NuxtLink to="/minigames/tic-tac-toe" class="gamer-btn">Tic Tac Toe</NuxtLink>
+            <NuxtLink :to="$localePath('minigames-guess-the-number')" class="gamer-btn">{{ $t('guessNumber.title') }}</NuxtLink>
+            <NuxtLink :to="$localePath('minigames-tic-tac-toe')" class="gamer-btn">{{ $t('ticTacToe.title') }}</NuxtLink>
           </div>
         </div>
       </div>
@@ -45,9 +45,9 @@
     <!-- Si no está logueado, no mostrar nada -->
     <div v-else>
       <div class="container user-container styled-container welcome-container">
-        <h2>Welcome to BattleNet Info!</h2>
-        <p class="welcome-text">Log in with your Battle.net account to view your game stats and play awesome minigames.<br>
-        <span class="welcome-highlight">Level up your experience!</span></p>
+        <h2>{{ $t('welcome') }}</h2>
+        <p class="welcome-text">{{ $t('login') }}<br>
+        <span class="welcome-highlight">{{ $t('levelup') }}</span></p>
         <div class="welcome-icons">
           <span class="icon">🎮</span>
           <span class="icon">✨</span>

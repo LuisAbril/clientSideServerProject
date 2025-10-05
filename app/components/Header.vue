@@ -2,16 +2,20 @@
   <header class="gamer-header">
     <div class="logo">BattleNet Info</div>
     <nav class="nav-flex">
-      <NuxtLink to="/" class="nav-btn">Home</NuxtLink>
-      <NuxtLink to="/about" class="nav-btn">About Us</NuxtLink>
-      <NuxtLink to="/contacts" class="nav-btn">Contact</NuxtLink>
+      <NuxtLink :to="$localePath('index')" class="nav-btn">{{ $t('home') }}</NuxtLink>
+      <NuxtLink :to="$localePath('about')" class="nav-btn">{{ $t('about') }}</NuxtLink>
+      <NuxtLink :to="$localePath('contacts')" class="nav-btn">{{ $t('contact') }}</NuxtLink>
       <div class="nav-btn-group">
         <button v-if="!userStore.loggedIn" class="gamer-btn login-btn-small" @click="loginWithBattleNet">
           <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" />
-          Login with Battle.net
+          {{ $t('loginBtn') }}
         </button>
         <button v-else class="gamer-btn" @click="logout">
-          Logout
+          {{ $t('logout') }}
+        </button>
+        <button class="gamer-btn" @click="toggleLocale">
+          <span v-if="locale === 'en'">ES</span>
+          <span v-else>EN</span>
         </button>
       </div>
     </nav>
@@ -22,8 +26,11 @@
 import { onMounted, watchEffect } from 'vue';
 import { useFetch } from '#app';
 import { useUserStore } from '~/stores/user';
+import { useI18n, useLocalePath } from '#imports';
 
 const userStore = useUserStore();
+const { locale, setLocale } = useI18n();
+const localePath = useLocalePath();
 
 const fetchUser = async () => {
   const { data } = await useFetch('/api/auth/user', { key: 'header-user', watch: false, server: false, immediate: true, cache: 'no-cache', credentials: 'include' });
@@ -48,6 +55,9 @@ const logout = async () => {
   await fetch('/api/auth/logout', { credentials: 'include' });
   userStore.clearUser();
   window.location.href = '/';
+};
+const toggleLocale = () => {
+  setLocale(locale.value === 'en' ? 'es' : 'en');
 };
 onMounted(() => {
   fetchUser();

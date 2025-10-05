@@ -1,10 +1,8 @@
 
 <template>
   <div class="about-container">
-    <h1>About BattleNet Info</h1>
-    <p>
-      BattleNet Info is a modern web application that allows you to log in with your Battle.net account and view your basic profile information. Designed for gamers, it features a stylish and intuitive interface. Enjoy exploring your Battle.net data in a fun and secure way!
-    </p>
+    <h1>{{ $t('aboutTitle') }}</h1>
+    <p>{{ $t('aboutText') }}</p>
   </div>
 </template>
 
