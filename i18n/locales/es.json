@@ -1,0 +1,71 @@
+{
+
+  "welcome": "¡Bienvenido a BattleNet Info!",
+
+  "welcomeUser": "Bienvenido,",
+
+  "login": "Inicia sesión con tu cuenta de Battle.net para ver tus estadísticas de juego y disfrutar de minijuegos épicos.",
+
+  "levelup": "¡Sube de nivel tu experiencia!",
+
+  "statistics": "Estadísticas",
+
+  "localStats": "Estadísticas locales",
+
+  "minigames": "Minijuegos",
+
+  "logout": "Cerrar sesión",
+
+  "loginBtn": "Entrar con Battle.net",
+
+  "home": "Inicio",
+
+  "about": "Sobre nosotros",
+
+  "contact": "Contacto",
+
+  "guessNumber": {
+
+    "title": "Adivina el número",
+
+    "difficulty": "Dificultad:",
+
+    "easy": "Fácil (1-50)",
+
+    "normal": "Normal (1-100)",
+
+    "hard": "Difícil (1-200)",
+
+    "guessPrompt": "Adivina un número entre {min} y {max}:",
+
+    "guessBtn": "¡Adivina!",
+
+    "attempts": "Intentos totales: {attempts}",
+
+    "history": "Historial de intentos",
+
+    "congrats": "¡Enhorabuena! ¡Adivinaste el número {number} en {attempts} intentos!",
+
+    "playAgain": "Jugar otra vez"
+
+  },
+
+  "ticTacToe": {
+
+    "title": "Tres en raya",
+
+    "win": "gana!",
+
+    "draw": "¡Es un empate!",
+
+    "currentPlayer": "Turno actual:"
+
+  },
+
+  "language": "Idioma",
+
+  "english": "Inglés",
+
+  "spanish": "Español"
+
+}

@@ -1,0 +1,71 @@
+{
+
+  "welcome": "Welcome to BattleNet Info!",
+
+  "welcomeUser": "Welcome,",
+
+  "login": "Log in with your Battle.net account to view your game stats and play awesome minigames.",
+
+  "levelup": "Level up your experience!",
+
+  "statistics": "Statistics",
+
+  "localStats": "Local Statistics",
+
+  "minigames": "Minigames",
+
+  "logout": "Logout",
+
+  "loginBtn": "Login with Battle.net",
+
+  "home": "Home",
+
+  "about": "About Us",
+
+  "contact": "Contact",
+
+  "guessNumber": {
+
+    "title": "Guess the Number",
+
+    "difficulty": "Difficulty:",
+
+    "easy": "Easy (1-50)",
+
+    "normal": "Normal (1-100)",
+
+    "hard": "Hard (1-200)",
+
+    "guessPrompt": "Guess a number between {min} and {max}:",
+
+    "guessBtn": "Guess",
+
+    "attempts": "Total attempts: {attempts}",
+
+    "history": "Attempts History",
+
+    "congrats": "Congratulations! You guessed the number {number} in {attempts} attempts!",
+
+    "playAgain": "Play Again"
+
+  },
+
+  "ticTacToe": {
+
+    "title": "Tic Tac Toe",
+
+    "win": "wins!",
+
+    "draw": "It's a draw!",
+
+    "currentPlayer": "Current Player:"
+
+  },
+
+  "language": "Language",
+
+  "english": "English",
+
+  "spanish": "Spanish"
+
+}
