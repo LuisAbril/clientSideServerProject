@@ -38,6 +38,14 @@ onMounted(() => {
 </script>
 
 <style>
+html, body {
+  background: linear-gradient(135deg, #181a1b 60%, #232526 100%, #1a2980 120%) !important;
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .app-bg {
   min-height: 100vh;
   background: linear-gradient(135deg, #181a1b 60%, #232526 100%, #1a2980 120%);
@@ -57,6 +65,14 @@ onMounted(() => {
   border-radius: 22px;
   border: 1.5px solid #1a2980;
   transition: box-shadow 0.3s, border 0.3s;
+}
+@media (max-width: 700px) {
+  .main-bg {
+    max-width: 98vw;
+    margin: 1.2rem auto;
+    padding: 1rem 0.2rem;
+    border-radius: 12px;
+  }
 }
 .main-bg:hover {
   box-shadow: 0 8px 48px #00ffe799, 0 2px 12px #000a;

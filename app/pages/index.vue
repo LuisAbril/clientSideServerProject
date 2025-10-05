@@ -252,6 +252,28 @@ watch(
   gap: 2.5rem;
   margin-top: 2.5rem;
 }
+@media (max-width: 700px) {
+  .main-flex-containers {
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+  }
+  .container, .stats-container, .minigames-container, .styled-container {
+    max-width: 98vw !important;
+    min-width: unset !important;
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+  }
+  .welcome-container {
+    min-height: 180px;
+    margin-top: 1.2rem;
+  }
+  .gamer-btn {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.2rem;
+    margin-top: 1rem;
+  }
+}
 .stats-container, .minigames-container {
   min-width: 320px;
   max-width: 400px;

@@ -59,6 +59,8 @@
     "draw": "It's a draw!",
 
     "currentPlayer": "Current Player:"
+  ,
+  "playAgain": "Play Again"
 
   },
 

@@ -76,6 +76,7 @@ watchEffect(() => {
     display: flex;
     align-items: center;
     gap: 1.2rem;
+    flex-wrap: wrap;
   }
   .nav-btn-group {
     display: flex;
@@ -128,23 +129,51 @@ watchEffect(() => {
     width: 32px;
     height: 32px;
   }
-.gamer-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #0f2027, #2c5364, #1a2980);
-  color: #fff;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 8px #000a;
-  font-family: 'Orbitron', 'Montserrat', sans-serif;
-}
-.logo {
-  font-size: 2rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #00ffe7;
-  text-shadow: 0 0 8px #00ffe7, 0 0 2px #fff;
-}
+  .gamer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #0f2027, #2c5364, #1a2980);
+    color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px #000a;
+    font-family: 'Orbitron', 'Montserrat', sans-serif;
+    flex-wrap: wrap;
+  }
+  .logo {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #00ffe7;
+    text-shadow: 0 0 8px #00ffe7, 0 0 2px #fff;
+    word-break: break-word;
+  }
+  @media (max-width: 700px) {
+    .gamer-header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.7rem 0.5rem;
+    }
+    .logo {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .nav-flex {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .nav-btn, .gamer-btn {
+      font-size: 0.95rem;
+      padding: 0.35rem 0.7rem;
+      margin-left: 0;
+      margin-bottom: 0.3rem;
+    }
+    .bnet-logo {
+      width: 24px;
+      height: 24px;
+    }
+  }
   .nav-btn {
     background: linear-gradient(120deg, #232526 0%, #1a2980 100%);
     color: #fff;
