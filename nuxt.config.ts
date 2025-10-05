@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/i18n',
+    '@vite-pwa/nuxt',
     // ...other modules
   ],
   i18n: {
@@ -22,6 +23,19 @@ export default defineNuxtConfig({
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'es', name: 'Español', file: 'es.json' }
     ]
+  },
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'BattleNet Info',
+      short_name: 'BattleNet',
+      icons: [
+        { src: '/favicon.ico', sizes: '64x64 32x32 24x24 16x16', type: 'image/x-icon' }
+      ],
+      start_url: '/',
+      display: 'standalone',
+      background_color: '#181a1b',
+      theme_color: '#00ffe7'
+    }
   }
-  
 })

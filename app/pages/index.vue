@@ -59,6 +59,18 @@
 </template>
 
 <script setup>
+import { useHead } from '#imports';
+
+useHead({
+  title: 'BattleNet Info - Minigames',
+  meta: [
+    { name: 'description', content: 'Play minigames and view your Battle.net stats!' },
+    { property: 'og:title', content: 'BattleNet Info' },
+    { property: 'og:description', content: 'Play minigames and view your Battle.net stats!' },
+    { property: 'og:image', content: '/bnet-logo.svg' },
+    { name: 'twitter:card', content: 'summary_large_image' }
+  ]
+});
 import { ref, onMounted, watch } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { useGuessNumberStore } from '~/stores/guessNumber';

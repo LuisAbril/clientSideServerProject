@@ -7,7 +7,7 @@
       <NuxtLink :to="$localePath('contacts')" class="nav-btn">{{ $t('contact') }}</NuxtLink>
       <div class="nav-btn-group">
         <button v-if="!userStore.loggedIn" class="gamer-btn login-btn-small" @click="loginWithBattleNet">
-          <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" />
+          <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" loading="lazy" />
           {{ $t('loginBtn') }}
         </button>
         <button v-else class="gamer-btn" @click="logout">

@@ -21,6 +21,17 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '#imports';
+useHead({
+  title: 'Tic Tac Toe - BattleNet Info',
+  meta: [
+    { name: 'description', content: 'Play Tic Tac Toe minigame on BattleNet Info.' },
+    { property: 'og:title', content: 'Tic Tac Toe - BattleNet Info' },
+    { property: 'og:description', content: 'Play Tic Tac Toe minigame on BattleNet Info.' },
+    { property: 'og:image', content: '/bnet-logo.svg' },
+    { name: 'twitter:card', content: 'summary_large_image' }
+  ]
+});
 import { ref, computed } from 'vue';
 import { useTicTacToeStore } from '~/stores/ticTacToe';
 const tttStore = useTicTacToeStore();

@@ -16,6 +16,17 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '#imports';
+useHead({
+  title: 'Statistics - BattleNet Info',
+  meta: [
+    { name: 'description', content: 'View your game statistics on BattleNet Info.' },
+    { property: 'og:title', content: 'Statistics - BattleNet Info' },
+    { property: 'og:description', content: 'View your game statistics on BattleNet Info.' },
+    { property: 'og:image', content: '/bnet-logo.svg' },
+    { name: 'twitter:card', content: 'summary_large_image' }
+  ]
+});
 import { useGuessNumberStore } from '~/stores/guessNumber';
 const guessStore = useGuessNumberStore();
 const guessStats = guessStore.stats;

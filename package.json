@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/i18n": "^10.1.0",
+    "@vite-pwa/nuxt": "^1.0.4",
     "axios": "^1.12.2",
     "nuxt": "^4.1.2",
     "pinia": "^3.0.3",
@@ -18,8 +19,8 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@types/node": "^24.6.2",
-    "typescript": "^5.9.3",
-    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge"
+    "typescript": "^5.9.3"
   }
 }

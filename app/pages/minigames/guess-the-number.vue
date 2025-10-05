@@ -43,6 +43,17 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '#imports';
+useHead({
+  title: 'Guess the Number - BattleNet Info',
+  meta: [
+    { name: 'description', content: 'Play Guess the Number minigame on BattleNet Info.' },
+    { property: 'og:title', content: 'Guess the Number - BattleNet Info' },
+    { property: 'og:description', content: 'Play Guess the Number minigame on BattleNet Info.' },
+    { property: 'og:image', content: '/bnet-logo.svg' },
+    { name: 'twitter:card', content: 'summary_large_image' }
+  ]
+});
 import { ref, computed, watch } from 'vue';
 import { useMouse } from '@vueuse/core';
 import { useGuessNumberStore } from '~/stores/guessNumber';

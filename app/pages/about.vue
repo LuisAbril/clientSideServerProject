@@ -26,6 +26,18 @@ h1 {
 
 <script lang="ts" setup>
 
+import { useHead } from '#imports';
+useHead({
+  title: 'About - BattleNet Info',
+  meta: [
+    { name: 'description', content: 'About BattleNet Info, a modern web app for gamers.' },
+    { property: 'og:title', content: 'About - BattleNet Info' },
+    { property: 'og:description', content: 'About BattleNet Info, a modern web app for gamers.' },
+    { property: 'og:image', content: '/bnet-logo.svg' },
+    { name: 'twitter:card', content: 'summary_large_image' }
+  ]
+});
+
 </script>
 
 <style>
