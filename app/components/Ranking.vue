@@ -3,8 +3,8 @@
     <h1 class="ranking-title">{{ $t('Ranking Guess the Number') }}</h1>
 
     <section class="ranking-section gamer-bg">
-      <h2 class="ranking-difficulty gamer-gradient gamer-border gamer-shadow">{{ $t('Fácil') }}</h2>
-      <table v-if="rankings.easy.length" class="ranking-table gamer-table">
+      <h2 class="ranking-difficulty easy-color gamer-border gamer-shadow">{{ $t('Fácil') }}</h2>
+      <table v-if="rankings.easy.length" class="ranking-table gamer-table easy-table">
         <thead>
           <tr>
             <th>{{ $t('Battle.net') }}</th>
@@ -20,14 +20,14 @@
           </tr>
         </tbody>
       </table>
-      <div v-else class="ranking-empty gamer-text">
+      <div v-else class="ranking-empty gamer-text easy-color">
         {{ $t('No hay datos para esta dificultad') }}
       </div>
     </section>
 
     <section class="ranking-section gamer-bg">
-      <h2 class="ranking-difficulty gamer-gradient gamer-border gamer-shadow">{{ $t('Media') }}</h2>
-      <table v-if="rankings.medium.length" class="ranking-table gamer-table">
+      <h2 class="ranking-difficulty medium-color gamer-border gamer-shadow">{{ $t('Media') }}</h2>
+      <table v-if="rankings.medium.length" class="ranking-table gamer-table medium-table">
         <thead>
           <tr>
             <th>{{ $t('Battle.net') }}</th>
@@ -43,14 +43,14 @@
           </tr>
         </tbody>
       </table>
-      <div v-else class="ranking-empty gamer-text">
+      <div v-else class="ranking-empty gamer-text medium-color">
         {{ $t('No hay datos para esta dificultad') }}
       </div>
     </section>
 
     <section class="ranking-section gamer-bg">
-      <h2 class="ranking-difficulty gamer-gradient gamer-border gamer-shadow">{{ $t('Difícil') }}</h2>
-      <table v-if="rankings.hard.length" class="ranking-table gamer-table">
+      <h2 class="ranking-difficulty hard-color gamer-border gamer-shadow">{{ $t('Difícil') }}</h2>
+      <table v-if="rankings.hard.length" class="ranking-table gamer-table hard-table">
         <thead>
           <tr>
             <th>{{ $t('Battle.net') }}</th>
@@ -66,7 +66,7 @@
           </tr>
         </tbody>
       </table>
-      <div v-else class="ranking-empty gamer-text">
+      <div v-else class="ranking-empty gamer-text hard-color">
         {{ $t('No hay datos para esta dificultad') }}
       </div>
     </section>
@@ -209,5 +209,60 @@ onMounted(() => {
 .gamer-text {
   font-family: 'Orbitron', 'Montserrat', sans-serif;
   text-shadow: 0 0 6px #00ffe7;
+}
+
+.easy-color {
+  color: #00ff7f !important;
+}
+.medium-color {
+  color: #ffe700 !important;
+}
+.hard-color {
+  color: #ff3c3c !important;
+}
+
+.easy-table th,
+.easy-table td {
+  border-color: #00ff7f !important;
+}
+.easy-table th {
+  background: #00ff7f !important;
+  color: #232526 !important;
+}
+.easy-table tr:nth-child(even) {
+  background: #1e2f1e !important;
+}
+.easy-table tr:nth-child(odd) {
+  background: #162616 !important;
+}
+
+.medium-table th,
+.medium-table td {
+  border-color: #ffe700 !important;
+}
+.medium-table th {
+  background: #ffe700 !important;
+  color: #232526 !important;
+}
+.medium-table tr:nth-child(even) {
+  background: #2f2f1e !important;
+}
+.medium-table tr:nth-child(odd) {
+  background: #262616 !important;
+}
+
+.hard-table th,
+.hard-table td {
+  border-color: #ff3c3c !important;
+}
+.hard-table th {
+  background: #ff3c3c !important;
+  color: #fff !important;
+}
+.hard-table tr:nth-child(even) {
+  background: #2f1e1e !important;
+}
+.hard-table tr:nth-child(odd) {
+  background: #261616 !important;
 }
 </style>

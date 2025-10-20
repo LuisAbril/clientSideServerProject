@@ -5,20 +5,15 @@
       <NuxtLink :to="$localePath('index')" class="nav-btn">{{ $t('home') }}</NuxtLink>
       <NuxtLink :to="$localePath('about')" class="nav-btn">{{ $t('about') }}</NuxtLink>
       <NuxtLink :to="$localePath('contacts')" class="nav-btn">{{ $t('contact') }}</NuxtLink>
-      <NuxtLink
-        to="/"
-        class="header-link"
-        active-class="active"
-      >
-        {{ $t('Inicio') }}
-      </NuxtLink>
+      
       <NuxtLink
         to="/ranking"
         class="header-link"
         active-class="active"
       >
-        {{ $t('Estadísticas') }}
+        Ranking
       </NuxtLink>
+
       <div class="nav-btn-group">
         <button v-if="!userStore.loggedIn" class="gamer-btn login-btn-small" @click="loginWithBattleNet">
           <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" loading="lazy" />
