@@ -5,6 +5,20 @@
       <NuxtLink :to="$localePath('index')" class="nav-btn">{{ $t('home') }}</NuxtLink>
       <NuxtLink :to="$localePath('about')" class="nav-btn">{{ $t('about') }}</NuxtLink>
       <NuxtLink :to="$localePath('contacts')" class="nav-btn">{{ $t('contact') }}</NuxtLink>
+      <NuxtLink
+        to="/"
+        class="header-link"
+        active-class="active"
+      >
+        {{ $t('Inicio') }}
+      </NuxtLink>
+      <NuxtLink
+        to="/ranking"
+        class="header-link"
+        active-class="active"
+      >
+        {{ $t('Estadísticas') }}
+      </NuxtLink>
       <div class="nav-btn-group">
         <button v-if="!userStore.loggedIn" class="gamer-btn login-btn-small" @click="loginWithBattleNet">
           <img src="/bnet-logo.svg" alt="Battle.net" class="bnet-logo" loading="lazy" />
@@ -194,9 +208,36 @@ watchEffect(() => {
   }
   .nav-btn:hover {
     background: linear-gradient(120deg, #00ffe7 0%, #1a2980 100%);
-    color: #181a1b;
+    color: #181a1a;
+    border-color: #fff;
+    box-shadow: 0 4px 16px #00ffe7cc;
+    text-shadow: 0 0 6px #00ffe7;
+  }
+  .header-link {
+    font-size: 1.05rem;
+    padding: 0.45rem 1.2rem;
+    min-width: 70px;
+    border-radius: 12px;
+    background: linear-gradient(120deg, #232526 0%, #1a2980 100%);
+    color: #fff;
+    border: 2px solid #00ffe7;
+    font-family: 'Orbitron', 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px #00ffe733;
+    transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    margin-left: 1.2rem;
+  }
+  .header-link:hover {
+    background: linear-gradient(120deg, #00ffe7 0%, #1a2980 100%);
+    color: #181a1a;
     border-color: #fff;
     box-shadow: 0 4px 16px #00ffe7cc;
     text-shadow: 0 0 6px #00ffe7;
   }
 </style>
+

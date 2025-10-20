@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  run:
+    cmds:
+      - air
+    desc: "Run the server with live reload"
+
+  migrate-up:
+    cmds:
+      - goose up
+    desc: "Run all database migrations"
+
+  migrate-down:
+    cmds:
+      - goose down
+    desc: "Revert the last database migration"
+
+  sqlc:
+    cmds:
+      - sqlc generate
+    desc: "Generate Go code from SQL queries"
