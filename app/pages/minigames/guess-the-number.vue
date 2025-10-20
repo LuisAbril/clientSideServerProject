@@ -34,8 +34,6 @@
           </li>
         </ul>
       </div>
-      <!-- Botón para guardar la partida en el ranking -->
-      <button @click="saveGameToRanking">{{ $t('Guardar partida en ranking') }}</button>
       <button @click="resetGame">{{ $t('guessNumber.playAgain') }}</button>
     </div>
     <div class="mouse-info">
@@ -59,12 +57,29 @@ useHead({
 import { ref, computed, watch } from 'vue';
 import { useMouse } from '@vueuse/core';
 import { useGuessNumberStore } from '~/stores/guessNumber';
+import { useUserStore } from '~/stores/user'; // Añade esta importación
+
 const store = useGuessNumberStore();
+const userStore = useUserStore(); // Instancia el store de usuario
 
 const BACKEND_URL = 'http://localhost:8081'
 
-// Simula el nombre del usuario Battle.net (ajusta según tu lógica real)
-const battlenetName = ref('PlayerBattleNet#1234')
+// Obtén el nombre real del usuario Battle.net (ajusta la propiedad según tu estructura real)
+const battlenetName = computed(() => {
+  return (
+    userStore.user?.battletag ||
+    userStore.user?.battlenetName ||
+    userStore.user?.username ||
+    userStore.user?.displayName ||
+    userStore.user?.sub ||
+    userStore.user?.user?.battletag ||
+    userStore.user?.user?.battlenetName ||
+    userStore.user?.user?.username ||
+    userStore.user?.user?.displayName ||
+    userStore.user?.user?.sub ||
+    'Anonimous'
+  )
+})
 
 const difficulties = [
   { label: 'Easy (1-50)', value: 'easy', min: 1, max: 50 },
@@ -104,7 +119,7 @@ function saveGameToRanking() {
       BattleNetName: battlenetName.value,
       GameDate: new Date().toISOString(),
       Attempts: attempts.value,
-      Difficulty: difficulty.value === 'normal' ? 'medium' : difficulty.value // adapta 'normal' a 'medium'
+      Difficulty: difficulty.value === 'normal' ? 'medium' : difficulty.value
     })
   })
 }
