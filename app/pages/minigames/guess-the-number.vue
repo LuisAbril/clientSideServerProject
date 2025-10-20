@@ -34,6 +34,8 @@
           </li>
         </ul>
       </div>
+      <!-- Botón para guardar la partida en el ranking -->
+      <button @click="saveGameToRanking">{{ $t('Guardar partida en ranking') }}</button>
       <button @click="resetGame">{{ $t('guessNumber.playAgain') }}</button>
     </div>
     <div class="mouse-info">
@@ -58,6 +60,11 @@ import { ref, computed, watch } from 'vue';
 import { useMouse } from '@vueuse/core';
 import { useGuessNumberStore } from '~/stores/guessNumber';
 const store = useGuessNumberStore();
+
+const BACKEND_URL = 'http://localhost:8081'
+
+// Simula el nombre del usuario Battle.net (ajusta según tu lógica real)
+const battlenetName = ref('PlayerBattleNet#1234')
 
 const difficulties = [
   { label: 'Easy (1-50)', value: 'easy', min: 1, max: 50 },
@@ -89,6 +96,19 @@ function setDifficulty(level: string) {
   resetGame();
 }
 
+function saveGameToRanking() {
+  fetch(`${BACKEND_URL}/rankings`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      BattleNetName: battlenetName.value,
+      GameDate: new Date().toISOString(),
+      Attempts: attempts.value,
+      Difficulty: difficulty.value === 'normal' ? 'medium' : difficulty.value // adapta 'normal' a 'medium'
+    })
+  })
+}
+
 function checkGuess() {
   if (won.value) return;
   const { min, max } = getRange();
@@ -104,6 +124,8 @@ function checkGuess() {
     playSound('correct');
     store.setHighScore(attempts.value);
     store.recordGame(attempts.value);
+    // Guardar automáticamente la partida en el ranking al ganar
+    saveGameToRanking();
   } else if (guess.value < number.value) {
     feedback.value = 'Too low!';
     history.value.push({ guess: guess.value, result: 'Too low' });

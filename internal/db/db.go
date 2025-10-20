@@ -54,3 +54,11 @@ func GetRankingsByDifficulty(db *sql.DB, difficulty string) ([]Ranking, error) {
 	}
 	return rankings, nil
 }
+
+func InsertRanking(db *sql.DB, battleNetName string, gameDate time.Time, attempts int, difficulty string) error {
+	_, err := db.Exec(`
+		INSERT INTO rankings (battlenet_name, game_date, attempts, difficulty)
+		VALUES ($1, $2, $3, $4)
+	`, battleNetName, gameDate, attempts, difficulty)
+	return err
+}
