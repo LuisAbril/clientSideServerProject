@@ -83,5 +83,13 @@
   "draws": "Draws",
   "probXWins": "Probability X Wins",
   "probOWins": "Probability O Wins",
-  "attempt": "Attempt"
+  "attempt": "Attempt",
+  "No hay datos para esta dificultad": "No data for this difficulty",
+  "Battle.net": "Battle.net",
+  "Date": "Date",
+  "Attempts": "Attempts",
+  "Guess the Number Ranking": "Guess the Number Ranking",
+  "Easy": "Easy",
+  "Medium": "Medium",
+  "Hard": "Hard"
 }

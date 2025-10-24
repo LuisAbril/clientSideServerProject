@@ -83,5 +83,13 @@
   "draws": "Empates",
   "probXWins": "Probabilidad de victoria X",
   "probOWins": "Probabilidad de victoria O",
-  "attempt": "Intento"
+  "attempt": "Intento",
+  "No hay datos para esta dificultad": "No hay datos para esta dificultad",
+  "Battle.net": "Battle.net",
+  "Date": "Fecha",
+  "Attempts": "Intentos",
+  "Guess the Number Ranking": "Ranking Adivina el Número",
+  "Easy": "Fácil",
+  "Medium": "Media",
+  "Hard": "Difícil"
 }
