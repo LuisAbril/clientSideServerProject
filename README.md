@@ -11,7 +11,7 @@ Below you will find instructions to start each part, manage the database, and a 
 
 The following diagram illustrates the main classes and relationships in the backend:
 
-![Class Diagram](./ClassDiagram.pbg)
+![Class Diagram](./ClassDiagram.png)
 
 *The diagram shows the main entities and their interactions, such as the database connection, API routes, and ranking model.*
 
