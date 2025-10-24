@@ -1,15 +1,15 @@
 <template>
   <div>
-    <h1 class="ranking-title">{{ $t('Ranking Guess the Number') }}</h1>
+    <h1 class="ranking-title">{{ $t('Guess the Number Ranking') }}</h1>
 
     <section class="ranking-section gamer-bg">
-      <h2 class="ranking-difficulty easy-color gamer-border gamer-shadow">{{ $t('Fácil') }}</h2>
+      <h2 class="ranking-difficulty easy-color gamer-border gamer-shadow">{{ $t('Easy') }}</h2>
       <table v-if="rankings.easy.length" class="ranking-table gamer-table easy-table">
         <thead>
           <tr>
             <th>{{ $t('Battle.net') }}</th>
-            <th>{{ $t('Fecha') }}</th>
-            <th>{{ $t('Intentos') }}</th>
+            <th>{{ $t('Date') }}</th>
+            <th>{{ $t('Attempts') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -26,13 +26,13 @@
     </section>
 
     <section class="ranking-section gamer-bg">
-      <h2 class="ranking-difficulty medium-color gamer-border gamer-shadow">{{ $t('Media') }}</h2>
+      <h2 class="ranking-difficulty medium-color gamer-border gamer-shadow">{{ $t('Medium') }}</h2>
       <table v-if="rankings.medium.length" class="ranking-table gamer-table medium-table">
         <thead>
           <tr>
             <th>{{ $t('Battle.net') }}</th>
-            <th>{{ $t('Fecha') }}</th>
-            <th>{{ $t('Intentos') }}</th>
+            <th>{{ $t('Date') }}</th>
+            <th>{{ $t('Attempts') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -49,13 +49,13 @@
     </section>
 
     <section class="ranking-section gamer-bg">
-      <h2 class="ranking-difficulty hard-color gamer-border gamer-shadow">{{ $t('Difícil') }}</h2>
+      <h2 class="ranking-difficulty hard-color gamer-border gamer-shadow">{{ $t('Hard') }}</h2>
       <table v-if="rankings.hard.length" class="ranking-table gamer-table hard-table">
         <thead>
           <tr>
             <th>{{ $t('Battle.net') }}</th>
-            <th>{{ $t('Fecha') }}</th>
-            <th>{{ $t('Intentos') }}</th>
+            <th>{{ $t('Date') }}</th>
+            <th>{{ $t('Attempts') }}</th>
           </tr>
         </thead>
         <tbody>
